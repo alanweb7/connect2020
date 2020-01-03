@@ -1,0 +1,21 @@
+:host{
+    span.div2 {
+        white-space: nowrap;
+        height: 30px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      a.hrefLinks {
+        color: #fff;
+        text-decoration: none;
+      }
+      ion-content.content.content-md.pagePesquisa {
+        background-color: #fbfdff;
+        /*  background-image: url(../../img/back02.jpg);
+          background-repeat: no-repeat;
+          background-size: cover; */
+      }
+      .barPesquisa {
+        display: flex;
+      }
+}

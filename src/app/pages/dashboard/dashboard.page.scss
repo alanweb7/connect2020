@@ -1,0 +1,46 @@
+:host {
+  //   estilos da galeria
+  .menu_apps {
+    font-size: xx-large;
+    color: #eeff00f5;
+  }
+  .gallery-view {
+    .image-container {
+      padding: 10px;
+      display: flex;
+      //   justify-content: space-between;
+      flex-wrap: wrap;
+
+      .thumb-item {
+        flex: 1 0 27%;
+        width: 50px;
+        height: auto;
+        text-align: center;
+        line-height: 12px;
+        padding: 7px;
+      }
+
+      .thumb-item {
+        .title-item {
+          display: block;
+          font-size: 10px;
+          margin-top: 7px;
+        }
+      }
+
+      ion-icon.item-avatar {
+        margin: auto;
+        padding: 15%;
+        background: salmon;
+        border-radius: 50%;
+        font-size: 50px;
+      }
+
+      .content-itens {
+        text-align: center;
+      }
+    }
+  }
+
+  //   final estilo galeria
+}

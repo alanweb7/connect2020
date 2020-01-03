@@ -1,0 +1,155 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon name="close-circle" style="color: red;font-size: x-large;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container-media">
+    <div class="header-midia" [ngStyle]="headerStyle"><span>{{title_page}}</span></div>
+  </div>
+  <div class="content-midia">
+    <div class="segment-midia">
+
+      <ion-grid fixed>
+
+        <ion-row *ngIf="typeData == 'audio'">
+          <ion-col col-12>
+            <div style="background-color: #1f38794d;">
+              <div *ngFor="let audio of infoData.audio_colection">
+                <div class="full-audio-div" style="text-align: center;">
+                  <audio controls>
+                    <source [src]="audio.audio_link" type="audio/mpeg">
+                    Seu dispositivo não suporta esse formato de audio.
+                  </audio>
+                </div>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="typeData == 'doc'">
+          <ion-col col-12 class="info-servico">
+            <ion-list id="verConteDo-list3" *ngFor="let doc of infoData.documento">
+              <a href="{{doc.doc_link}}">
+                <ion-item-sliding class="docitem">
+
+                  <ion-item color="none" id="verConteDo-list-item5">
+                    {{doc.file_name}}
+                    <ion-icon name="document" item-right></ion-icon>
+                  </ion-item>
+
+                  <ion-item-options side="left">
+                    <ion-button color="positive"></ion-button>
+                  </ion-item-options>
+                </ion-item-sliding>
+              </a>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+        <!-- hotspot -->
+        <ion-row *ngIf="typeData == 'hotspot'">
+          <ion-col col-12 class="info-servico">
+
+            <div *ngIf="infoData.hotspot.isHotspotActive" style="text-align: center">
+              
+                  
+              <div *ngIf="infoData.hotspot.isRegisterScreen">
+                <h3>dados do hotspot</h3>
+                
+              <!--    
+                <div *ngIf="player_id"><span>Token wi-fi: {{player_id}}</span></div>
+
+                <form padding [formGroup]="userHotspotForm" (submit)="setDataUserHotspot()" novalidate>
+                  <div>
+                    <ion-item>
+                      <ion-input [(ngModel)]="userHotspotForm.nome" formControlName="nome" type="text"
+                        placeholder="Nome" clearInput clearOnEdit="false">
+                      </ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-input [(ngModel)]="userHotspotForm.email" formControlName="email" type="text"
+                        placeholder="E-mail" clearInput clearOnEdit="false">
+                      </ion-input>
+                    </ion-item>
+                  </div>
+                  <ion-item>
+                    <ion-input [(ngModel)]="userHotspotForm.fone" formControlName="fone" type="text"
+                      [brmasker]="{mask:'(00) 00000-0000', len:15, type:'num'}" placeholder="fone" clearInput
+                      clearOnEdit="false">
+                    </ion-input>
+                  </ion-item>
+
+                  <div>
+                    <h5>Endereço:</h5>
+                    <ion-item>
+                      <ion-textarea [(ngModel)]="userHotspotForm.endereco" formControlName="endereco"
+                        placeholder="Endereço" value="{{userHotspotForm.endereco}}">
+                      </ion-textarea>
+                    </ion-item>
+
+                    <ion-item>
+                      <ion-input class="text-inputs" [(ngModel)]="userHotspotForm.cidade" formControlName="cidade"
+                        type="text" placeholder="Cidade" clearInput clearOnEdit="false">
+                      </ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-input class="text-inputs" [(ngModel)]="userHotspotForm.bairro" formControlName="bairro"
+                        type="text" placeholder="Bairro" clearInput clearOnEdit="false">
+                      </ion-input>
+                    </ion-item>
+
+                  </div>
+                  <div style="display: flex">
+                    <ion-item>
+                      <ion-input [(ngModel)]="userHotspotForm.idade" formControlName="idade" type="number"
+                        placeholder="idade" clearInput clearOnEdit="false">
+                      </ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label>Sexo:</ion-label>
+                      <ion-select [(ngModel)]="userHotspotForm.sexo" formControlName="sexo">
+                        <ion-option value="1" [selected]="true">Masc.</ion-option>
+                        <ion-option value="2">Femin.</ion-option>
+                      </ion-select>
+                    </ion-item>
+                  </div>
+                  <h6 *ngIf="messageError.email" class="error"> {{messageError.email}}</h6>
+                  <button ion-button block outline color="primary" [disabled]="!userHotspotForm.valid"
+                    class="login-button">Connect</button>
+                </form>
+                <button class="btn_connect facebook_st" ion-button icon-left (click)='loginFacebook();'>
+                  <ion-icon name="logo-facebook"></ion-icon>Login com Facebook
+                </button>
+              -->   
+              </div>
+           
+              <!--
+              <button ion-button outline (click)="actionSpotConnect()" [disabled]="inConnect"
+                *ngIf="!activeForm">ACESSAR REDE
+                WI-FI</button>
+              <div style="width: 100%">
+                <span *ngIf="hotSpotConnMens && !isError" style="color: #080808;">{{hotSpotConnMens}}</span>
+                <span *ngIf="hotSpotConnMens && isError" style="color: #ff0000;">{{hotSpotConnMens}}</span>
+              </div>
+              <div *ngIf="showDataWifi">
+                <h4> Dados da conexão</h4>
+                <h5>Rede: {{hotspotData.ssid}}</h5>
+                <button ion-button icon-left (click)="copyToTransfer()">
+                  <ion-icon name="copy"></ion-icon>
+                  Copiar senha
+                </button>
+              </div>
+              -->
+            </div>
+
+          </ion-col>
+        </ion-row>
+        <!-- final hotspot -->
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>

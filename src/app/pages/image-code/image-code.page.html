@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="menu-code"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Imagens</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="gallery-view">
+    <div class="image-container">
+      <ion-thumbnail class="thumb-item" (click)="viewPhoto(image.img_link)" *ngFor="let image of images">
+        <ion-img [src]="image.img_link" class="thumb-img"></ion-img>
+      </ion-thumbnail>
+
+      <!-- <img [src]="image.img_link" (click)="viewPhoto(image.img_link)"> -->
+    </div>
+  </div>
+  <div>
+    <!-- <ion-list class="index-formularios">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-6 col-md-4 col-xl-3 *ngFor="let image of gallery_example">
+            <ion-avatar>
+              <img [src]="image.img_link" (click)="viewPhoto(image.img_link)">
+              <ion-icon (click)="showConfirm(image.id)" color="light" name="trash" *ngIf="image.id"></ion-icon>
+            </ion-avatar>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-list> -->
+  </div>
+  <!-- fab placed to the (vertical) center and end -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="ShowCam()">
+      <ion-icon class="icone-add-photo" name="icone-add-photo"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

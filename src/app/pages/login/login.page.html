@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/inicio"></ion-back-button>
+    </ion-buttons>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="content_logo" *ngIf="hiddeLogo">
+    <!-- <ion-icon name="icone-logo"></ion-icon> -->
+  </div>
+  <div class="container-form">
+    <form [formGroup]="loginFormG">
+      <ion-list class="index-formularios">
+        <ion-item>
+          <ion-label>
+            <ion-icon color="primary" name="mail"></ion-icon>
+          </ion-label>
+          <ion-input name="username" type="email" formControlName="username" placeholder="Usuario">
+          </ion-input>
+        </ion-item>
+        <div>
+          <p *ngIf="errorEmail" class="error"> {{messageEmail}}</p>
+        </div>
+        <ion-item>
+          <ion-label>
+            <ion-icon name="lock" color="primary"></ion-icon>
+          </ion-label>
+          <ion-input name="password" type="{{type}}" formControlName="password" placeholder="Senha"
+            class="model-login"></ion-input>
+          <ion-button shape="round" fill="outline" (click)="showPassword()">
+            <ion-icon style="color: black !important;" color="dark" slot="icon-only"
+              [name]="showPass ? 'eye-off' : 'eye'"></ion-icon>
+          </ion-button>
+        </ion-item>
+        <div *ngIf="errorPassword" class="error">
+          {{messagePassword}}
+        </div>
+      </ion-list>
+    </form>
+  </div>
+  <div style="text-align: center;">
+    <div>
+      <!-- <a (click)="recuperarsenhaModal()" translate>login.esqueceu</a> -->
+    </div>
+    <div style="display: flex;width: 100%;padding: 20px;">
+      <ion-button style="width: 100%;" class="facebook" expand="full" (click)="actionLogin()">
+        Login
+      </ion-button>
+      <ion-button style="width: 100%;" expand="block" fill="outline" color="tertiary" (click)="shopcode()" translate>
+        <ion-icon slot="start" name="add"></ion-icon>
+        login.conta
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

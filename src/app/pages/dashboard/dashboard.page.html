@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Painel</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="gallery-view">
+    <div class="image-container">
+
+      <div class="thumb-item content-itens" *ngFor="let menu of menu_midias">
+
+        <ion-icon class="item-avatar"
+          [ngStyle]="{'background-color': menu.bg_color ? menu.bg_color : 'red', 'color': menu.icon_color ? menu.icon_color : '#ffffff'}"
+          name="{{menu.icon}}" (click)="getAction(menu.action)"></ion-icon>
+
+        <h4 class="title-item">{{menu.name}}</h4>
+      </div>
+
+      <!-- <img [src]="image.img_link" (click)="viewPhoto(image.img_link)"> -->
+    </div>
+  </div>
+</ion-content>

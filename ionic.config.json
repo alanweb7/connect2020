@@ -1,5 +1,8 @@
 {
   "name": "connect-kscode_0103",
-  "integrations": {},
-  "type": "angular"
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular",
+  "id": "eb53ea0b"
 }

@@ -3,6 +3,13 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-header>
         <ion-toolbar>
+          <ion-buttons slot="end">
+            <ion-menu-toggle>
+              <ion-button>
+                <ion-icon slot="icon-only" ios="ios-arrow-dropleft" md="md-arrow-dropleft"></ion-icon>
+              </ion-button>
+            </ion-menu-toggle>
+          </ion-buttons>
           <ion-title>Menu</ion-title>
         </ion-toolbar>
       </ion-header>
@@ -16,6 +23,27 @@
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false" >
+            <!-- <ion-item [routerLink]="['/meus-codes']" >
+              <ion-icon style="color: blue;" slot="start" name="apps"></ion-icon>
+              <ion-label translate>
+                meus_codes.page
+              </ion-label>
+            </ion-item> -->
+            <ion-item (click)="access()">
+              <ion-icon style="color: blue;" slot="start" name="apps"></ion-icon>
+              <ion-label translate>
+                meus_codes.page
+              </ion-label>
+            </ion-item>
+            <ion-item (click)="logout()" *ngIf="statusLog">
+              <ion-icon style="color: red;" slot="start" name="log-out"></ion-icon>
+              <ion-label translate>
+                menu.sair
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
         </ion-list>
       </ion-content>
     </ion-menu>

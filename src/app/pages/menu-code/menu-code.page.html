@@ -1,0 +1,281 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button [routerLink]="['/meus-codes']" replaceUrl="true"></ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="getAction('apps')" *ngIf="showMenuApps">
+        <ion-icon slot="start" name="apps" class="menu_apps"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{nome_page}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+  <div *ngIf="segment == 1" class="padding" style="padding: 15px;">
+    <form class="col s12" [formGroup]="cadastroCode" name="cadastroCode">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <p>{{texto}}</p>
+            <ion-list class="index-formularios">
+              <ion-item>
+                <ion-input type="text" placeholder="Seu code" formControlName="name" value="{{code}}"></ion-input>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </div>
+  <!-- AQUI COMEÇA O SEGMENTE DA HOME-->
+  <div style="margin-bottom: 15%;">
+    <!-- slide inicial-->
+    <div class="segment-slide" class="padding" style="padding: 15px;">
+      <div *ngIf="segment == '1' ">
+        <form class="col s12" [formGroup]="cadastroForm" name="cadastroForm">
+          <ion-list class="index-formularios">
+            <ion-item>
+              <ion-label>
+                <ion-icon name="pricetag"></ion-icon>
+              </ion-label>
+              <ion-input name="titulo" type="text" placeholder="{{titulo_lang}}" formControlName="titulo"
+                class="validate" value="{{titulo}}"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">Descrição</ion-label>
+              <ion-textarea formControlName="descricao" name="descricao" value="descricao">
+              </ion-textarea>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                <ion-icon name="key"></ion-icon>
+              </ion-label>
+              <ion-input name="password" type="text" placeholder="{{senha}}" formControlName="password" class="validate"
+                value="{{password}}"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>{{ativa_senha}}</ion-label>
+              <ion-toggle formControlName="isprivate" (ionChange)="change_senha(model.isprivate)"
+                checked="{{modelG.isprivate}}"></ion-toggle>
+            </ion-item>
+          </ion-list>
+
+        </form>
+      </div>
+      <div *ngIf="segment == 2">
+        <div class="gallery-view">
+          <div class="image-container">
+            
+              <div class="thumb-item content-itens" *ngFor="let menu of menu_midias">
+                
+                  <ion-icon class="item-avatar" [ngStyle]="{'background-color': menu.bg_color ? menu.bg_color : 'red', 'color': menu.icon_color ? menu.icon_color : '#ffffff'}" name="{{menu.icon}}" (click)="getAction(menu.action)"></ion-icon>
+               
+                <h4 class="title-item">{{menu.name}}</h4>
+              </div>
+      
+            <!-- <img [src]="image.img_link" (click)="viewPhoto(image.img_link)"> -->
+          </div>
+        </div>
+      </div>
+      <div *ngIf="segment == 3">
+        <form class="" [formGroup]="loginForm">
+          <ion-list class="index-formularios">
+            <ion-item>
+              <ion-label>
+                <ion-icon name="link"></ion-icon>
+              </ion-label>
+              <ion-input name="nome" type="text" formControlName="link" placeholder="{{campo}}"
+                value="{{link}}"></ion-input>
+            </ion-item>
+            <div>
+              <p *ngIf="errorEmail" class="error"> {{messageEmail}}</p>
+            </div>
+            <ion-item>
+              <ion-label>{{ativar_lik}}</ion-label>
+              <ion-toggle formControlName="islink" (ionChange)="change_segmento(meu_link)"
+                checked="{{meu_link}}"></ion-toggle>
+            </ion-item>
+          </ion-list>
+        </form>
+      </div>
+      <div *ngIf="segment == 4">
+        <div style="width: 100%; padding: 10px !important;">
+          <div class="header-info">
+            <ion-button fill="outline" (click)="setHotSpotApi('get_users')" *ngIf="!hotspotConditions">
+              <ion-icon ios="ios-contacts" md="md-contacts" style="margin-right: 5px; font-size: large"></ion-icon>
+              Usuários Cadastrados
+            </ion-button>
+            <div class="header-info-flex" *ngIf="hotspotConditions">
+              <h4 style="text-align: center; flex: 0 0 60%">Lista de usuários cadastrados no hotspot:</h4>
+              <ion-button fill="outline" round (click)="setActionHotSpot('hiddeInfo')">
+                <ion-icon ios="ios-backspace" md="md-backspace" style="margin-right: 5px; font-size: large; color: red">
+                </ion-icon> VOLTAR
+              </ion-button>
+            </div>
+          </div>
+          <ion-list class="ion-no-padding" *ngIf="hotspotConditions">
+            <ion-item class="hotspot-item" *ngFor="let user of hotspotuserInfo">
+              <div class="info-content" (click)="setActionHotSpot({'action':'detail_user','player_id':user.player_id})">
+                <div style="width: 75%; text-align: left">
+                  <ion-icon *ngIf="sectorUser != user.player_id" class="icons-tools" ios="ios-arrow-dropdown-circle"
+                    md="md-arrow-dropdown-circle" style="color: green"></ion-icon>
+                  <ion-icon *ngIf="sectorUser == user.player_id" class="icons-tools" ios="ios-arrow-dropup-circle"
+                    md="md-arrow-dropup-circle" style="color: red"></ion-icon>
+                  | {{user.data.nome}}
+                </div>
+                <div class="info-user" *ngIf="sectorUser == user.player_id ">
+                  <h4>
+                    <ion-icon ios="ios-contact" md="md-contact"></ion-icon><strong> informações do usuário:</strong>
+                  </h4>
+                  <div style="padding-left: 10%">
+                    <p style="font-size: large" class="local-info item-text-wrap">
+                    </p>
+                    <ion-item *ngIf="user.data.email">
+                      <ion-icon ios="ios-mail" md="md-mail"></ion-icon>
+                      <ion-textarea class="text-endereco" rows="2" readonly value="{{user.data.email}}">
+                      </ion-textarea>
+                    </ion-item>
+                    <p style="font-size: large" class="local-info item-text-wrap">
+                      <ion-icon ios="ios-call" md="md-call"></ion-icon>
+                      {{user.data.fone}}
+                    </p>
+                    <ion-item *ngIf="user.data.endereco">
+                      <ion-textarea class="text-endereco" rows="5" readonly value="{{user.data.endereco}}">
+                      </ion-textarea>
+                    </ion-item>
+                  </div>
+                  <h4>
+                    <ion-icon ios="ios-construct" md="md-construct"></ion-icon><strong> Ferramentas:</strong>
+                  </h4>
+                  <ion-grid>
+                    <ion-row style="display: flex;">
+                      <ion-col size="4">
+                        <ion-button color="light" (click)="postPushHotspot(user)" class="um">
+                          <ion-icon style="text-align: center" ios="ios-notifications" md="md-notifications"
+                            class="icons-tools notify-user">
+                          </ion-icon>
+                        </ion-button>
+                      </ion-col>
+                      <ion-col size="4">
+                        <a href="mailto:{{user.data.email}}" *ngIf="user.data.email">
+                          <ion-button color="light" class="um">
+                            <ion-icon style="text-align: center" ios="ios-mail" md="md-mail"
+                              class="icons-tools email-user">
+                            </ion-icon>
+                          </ion-button>
+                        </a>
+                      </ion-col>
+                      <ion-col size="4">
+                        <a href="tel:{{user.data.fone}}" *ngIf="user.data.fone">
+                          <ion-button color="light" class="um">
+                            <ion-icon style="text-align: center" ios="ios-call" md="md-call"
+                              class="icons-tools phone-user">
+                            </ion-icon>
+                          </ion-button>
+                        </a>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </div>
+              </div>
+            </ion-item>
+          </ion-list>
+        </div>
+        <!--Formulario do hotspot-->
+        <div class="container-hotspot-fields" *ngIf="!hotspotConditions">
+          <div *ngIf="!isIos">
+            <ion-button full (click)="searchWifi()" [disabled]="inSearch" round>
+              <ion-icon *ngIf="!inSearch" slot="start" name="md-refresh"
+                style="font-size: x-large; color: chartreuse; position: relative; float: left; margin-left: 20px; margin-right:15px">
+              </ion-icon>
+              <span *ngIf="!inSearch">BUSCAR REDES WI-FI</span>
+              <span *ngIf="inSearch">... Buscando ...</span>
+              <ion-spinner *ngIf="inSearch" name="bubbles"></ion-spinner>
+            </ion-button>
+          </div>
+          <div *ngIf="!isWifiSelected && !isIos">
+            <h3 *ngIf="networks"> Redes Encontradas</h3>
+            <h3 *ngIf="!networks"> Nenhuma Rede Encontrada</h3>
+            <h5 *ngIf="isIos"> Digite o Nome da Rede</h5>
+            <ion-card *ngFor="let network of networks">
+              <ion-item (click)="setActionHotSpot({'action':'password', 'ssid':network.SSID})">
+                <h3>{{network.SSID}}</h3>
+                <ion-button round item-end>
+                  <ion-icon ios="ios-share" md="md-options"></ion-icon>
+                </ion-button>
+              </ion-item>
+            </ion-card>
+          </div>
+          <!-- Mostra se a rede for selecionada -->
+          <div *ngIf="isWifiSelected">
+            <form class="" [formGroup]="hotSpotForm">
+              <div style="margin-top: 20px">
+                <h5>Nome da Rede:</h5>
+                <ion-list>
+                  <ion-item>
+                    <ion-label>
+                      <ion-icon name="md-wifi"></ion-icon>
+                    </ion-label>
+                    <ion-input name="ssid" type="text" formControlName="ssid"
+                      placeholder="Nome da Rede" value="{{hotSpotForm.ssid}}" readonly></ion-input>
+                  </ion-item>
+                </ion-list>
+                <h5>Senha usada na Rede:</h5>
+                <ion-list>
+                  <ion-item>
+                    <ion-label>
+                      <ion-icon name="md-code-working"></ion-icon>
+                    </ion-label>
+                    <ion-input name="password" type="text" formControlName="password"
+                      placeholder="Senha" value="{{hotSpotForm.password}}"></ion-input>
+                  </ion-item>
+                  <div>
+                    <p *ngIf="errorHotspotConnect" class="error"> {{messageHotspot}}</p>
+                  </div>
+                </ion-list>
+              </div>
+              <div style="text-align: center">
+                <!--
+
+                <ion-button  (click)="conectHotspot()" round>
+                <span style="float: left" *ngIf="!inSearch">TESTAR A CONEXÃO </span>
+                <ion-spinner *ngIf="inSearch" name="bubbles" style="color: cornsilk"></ion-spinner>
+                <ion-icon name="md-checkmark-circle" style="color: chartreuse; font-size: x-large"
+                  *ngIf="isConnected == 1 && !inSearch"></ion-icon>
+                <ion-icon name="md-close-circle" style="color: #ff0022; font-size: x-large; margin-left: 10px" *ngIf="isConnected == 3 && !inSearch">
+                </ion-icon>
+                <ion-spinner name="bubbles" *ngIf="inSearch"></ion-spinner>
+              </ion-button>
+              <span style="color: #ff0022; width: 100%" *ngIf="isConnected == 3">Erro ao tentar conectar com a rede wi-fi</span>
+
+            -->
+              </div>
+              <ion-list>
+                <ion-item>
+                  <ion-label>ATIVAR HOTSPOT</ion-label>
+                  <ion-toggle formControlName="isHotspotActive"
+                    checked="{{isHotspotActive}}"></ion-toggle>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label>USAR SOMENTE COMO HOTSPOT</ion-label>
+                  <ion-toggle formControlName="isOnlyHotspot"
+                    checked="{{hotSpotForm.isOnlyHotspot}}"></ion-toggle>
+                </ion-item>
+                <ion-item>
+                  <ion-label>TELA DE CADASTRO</ion-label>
+                  <ion-toggle formControlName="isRegisterScreen"
+                    checked="{{hotSpotForm.isRegisterScreen}}"></ion-toggle>
+                </ion-item>
+              </ion-list>
+            </form>
+          </div>
+        </div>
+        <!--Formulario do hotspot (final)-->
+      </div>
+
+    </div> <!-- fechamento dos sliders -->
+  </div> <!-- final dos segmentos -->
+</ion-content>

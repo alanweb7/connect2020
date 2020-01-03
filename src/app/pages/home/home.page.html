@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-no-padding">
+  <div style="margin-top: 15px;">
+    <ion-card class="fundo" style="text-align: center" >
+      <img src="assets/imgs/logo_home_blanc.svg" style="height: 90px"  class="show-tabbar" />
+      <ion-card-content>
+        <ion-card-title>
+          {{title}}
+        </ion-card-title>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <form [formGroup]="signupform" class="form_home" (ngSubmit)="getCode()">
+
+    <ion-item>
+      <ion-input type="text" placeholder="CONNECT AQUI" formControlName="codeNumber" name="code"></ion-input>
+    </ion-item>
+    <ion-button color="primary" expand="block" icon-left (click)="getCode()" [disabled]="signupform.invalid" class="btn_home"> 
+      <ion-icon name="navigate" slot="start" class="icon_btn_home"></ion-icon>
+      {{'home.button' | translate:param}}
+    </ion-button>
+
+  </form>
+  <div class="qrcode_button">
+
+    <ion-button expand="round" fill="outline" routerLink="/qrcode" routerDirection="forward">
+      <ion-icon slot="start" name="md-qr-scanner"></ion-icon>
+      Escanear código QR
+    </ion-button>
+    
+  </div>
+  <!-- <ion-button [routerLink]="[ '/menu-code' ]" [queryParams]="{ id: '17'}" > 
+    Click me
+  </ion-button>-->
+  <div class="message-api" [ngStyle]="messageStyle" *ngIf="responseApi.message"><span>{{responseApi.message}}</span></div>
+</ion-content>
+<!-- CONTENT -->
+<!-- FOOTER -->
+<ion-footer class="show-tabbar">
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row style="display: flex;">
+        <ion-col>
+          <div class="text_footer" routerLink="/modelo" routerDirection="forward" >{{ 'home.pesquisa' | translate:param }} <span
+              class="span_right">|</span> </div>
+        </ion-col>
+        <ion-col>
+          <div class="text_footer" (click)="getCode('connect')">CONNECT <span class="span_right">|</span></div>
+        </ion-col>
+        <ion-col>
+          <div class="text_footer" (click)="shopcode()">{{'home.adquira'  | translate:param}} </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>
+<!-- FOOTER -->

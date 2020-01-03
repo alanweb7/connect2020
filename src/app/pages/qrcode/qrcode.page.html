@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/inicio"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Ler Code</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="scan_container">
+
+    <div class="scan_content">...</div>
+
+  </div>
+  <div class="message-api" [ngStyle]="messageStyle" *ngIf="responseApi.message"><span>{{responseApi.message}}</span></div>
+  <div style="width: 100%;text-align: center;">
+    <ion-button (click)="qrscanner()">
+      Nova leitura
+    </ion-button>
+  </div>
+</ion-content>

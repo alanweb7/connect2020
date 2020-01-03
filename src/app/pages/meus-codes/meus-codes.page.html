@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/inicio" icon="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{page}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div style="margin-bottom: 20%;">
+    <ion-searchbar (ionInput)="filterList($event)" (ionClear)="onCancel($event)" placeholder="{{campo}}">
+    </ion-searchbar>
+    <ion-list *ngFor="let code of meus_codes">
+      <ion-item-sliding #actionCode>
+        <ion-item>
+          <ion-thumbnail slot="start" (click)="pushPage(code.code)">
+            <img [src]="code.img_link ?  code.img_link : './assets/imgs/no-img.jpeg'">
+          </ion-thumbnail>
+          <ion-label>
+            <h4>{{code.code}}</h4>
+            <p style="font-size: small;">{{code.descricao}}</p>
+          </ion-label>
+          <ion-note slot="end">
+            <ion-badge color="dark">{{code.views}}</ion-badge>
+          </ion-note>
+        </ion-item>
+        <ion-item-options side="end" (click)="actionCode.close()">
+          <ion-item-option color="danger" (click)="showConfirm(code.id)">
+            <ion-icon slot="icon-only" ios="ios-trash" md="md-trash" style="color: #ffffff;"></ion-icon>
+          </ion-item-option>
+          <ion-item-option (click)="ShowMenu(code.id)">
+            <ion-icon slot="icon-only" ios="ios-construct" md="md-construct" style="color: #ffffff;"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+    <!--   </ng-template>  -->
+  </div>
+  <!-- fab placed to the bottom start -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="validaPacote()">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

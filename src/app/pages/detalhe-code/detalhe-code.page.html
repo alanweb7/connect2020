@@ -1,0 +1,189 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button [routerLink]="['/inicio']"></ion-back-button>
+      </ion-buttons>
+      <ion-title></ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content class="ion-no-padding">
+    <div class="content-header">
+      <ion-item>
+        <ion-avatar slot="start">
+          <img [src]="photo" />
+        </ion-avatar>
+        <div>
+          <div style="font-size: smaller; text-transform: uppercase;">{{code.code | slice:0:18}}</div>
+          <div style="color: slategrey; font-size: x-small; text-transform:uppercase">{{code.titulo | slice:0:24}}</div>
+        </div>
+        <ion-badge color="primary" slot="end">{{code.vews}}<br>visualizações</ion-badge>
+      </ion-item>
+    </div>
+    <ion-grid class="ion-no-padding" *ngIf="videoGallery">
+      <ion-row>
+        <ion-col col-12 class="info-servico video_gallery">
+          <div *ngIf="videoInfo.post_status == 'complete'">
+            <iframe width="100%" height="250px" [src]="videoInfo.video_link" frameborder="0" webkitallowfullscreen
+              mozallowfullscreen allowfullscreen>
+            </iframe>
+          </div>
+          <div>
+            <video controls="controls" id="myVideo" preload="metadata" width="100%" height="250px"
+              webkit-playsinline="webkit-playsinline" class="videoPlayer"
+              *ngIf="videoInfo.post_status == 1 || videoInfo.post_status == 2">
+              <source src="{{videoInfo.video_link}}" type="video/mp4" />
+            </video>
+          </div>
+          <div class="video_controller">
+            <ion-button class="controller-button" (click)="getVideo('down')" expand="round" [disabled]="disablePrev">
+              <ion-icon class="btn_control" style="font-size: large" slot="icon-only" name="md-arrow-dropleft-circle">
+              </ion-icon>
+            </ion-button>
+            <div class="info_slide_number" style="font-size: large; padding-top:10px;">{{infoLegendSlides}}</div>
+            <ion-button class="controller-button" (click)="getVideo('up')" expand="round" [disabled]="disableNext">
+              <ion-icon class="btn_control" style="font-size: large" slot="icon-only" name="md-arrow-dropright-circle">
+              </ion-icon>
+            </ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item class="ion-no-padding">
+            <ion-slides [options]="{slidesPerView: 3}" (ionSlideDrag)="doRefresh($event)">
+              <ion-slide>
+                <div class="col-center" (click)="getMidiaPage('audio')">
+                  <ion-icon name="volume-mute" class="icon-midia audio-icon"></ion-icon><br><span class="midia-text">
+                    Áudios
+                  </span>
+                </div>
+              </ion-slide>
+              <ion-slide>
+                <div class="col-center" (click)="getMidiaPage('doc')">
+                  <ion-icon ios="ios-document" md="md-document" class="icon-midia doc-icon"></ion-icon><br><span
+                    class="midia-text"> Documentos </span>
+                </div>
+              </ion-slide>
+              <ion-slide>
+                <div class="col-center" (click)="getMidiaPage('hotspot')">
+                  <ion-icon ios="ios-wifi" md="md-wifi" class="icon-midia hotspot-icon"></ion-icon><br><span
+                    class="midia-text">
+                    Hotspot </span>
+                </div>
+              </ion-slide>
+              <ion-slide>
+                <div class="col-center" (click)="getMidiaPage('chat')">
+                  <ion-icon ios="ios-chatbubbles" md="md-chatbubbles" class="icon-midia chat-icon"></ion-icon><br><span
+                    class="midia-text">
+                    Chat </span>
+                </div>
+              </ion-slide>
+              <ion-slide>
+                <div class="col-center" (click)="getMidiaPage('chat')">
+                  <ion-icon ios="ios-send" md="md-send" class="icon-midia chat-icon"></ion-icon><br><span
+                    class="midia-text">
+                    Comentários </span>
+                </div>
+              </ion-slide>
+            </ion-slides>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <!-- descricao do canal -->
+          <div class="descricao-code" *ngIf="code.descricao != ''">
+            <div class="content-descricao" [innerHTML]="code.descricao">
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <!-- fab placed to the top end -->
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <button (click)="selectTipo('0')" ion-fab color="light" class="dois" *ngIf="whatsapp && whatsapp.length > 1">
+        <ion-icon name="call" disabled="true"></ion-icon>
+      </button>
+      <a href="http://api.whatsapp.com/send?1=pt_BR&phone={{calling_code}}{{tel_whatsapp}}"
+        *ngIf="whatsapp && whatsapp.length == 1">
+        <button ion-fab color="light" class="dois">
+          <ion-icon name="call" disabled="true"></ion-icon>
+        </button>
+      </a>
+    </ion-fab>
+  </ion-content>
+  <!-- FOOTER -->
+  <ion-footer>
+    <ion-toolbar>
+  
+      <!-- INICIO BOTOES COM WHATSAPP -->
+      <div style="display: flex;">
+  
+        <div class="info-servico contacts-segments btn_segments" *ngIf="code.code_sectors.telefone">
+  
+          <a href="tel:{{code.code_sectors.telefone[0].conteudo}}" *ngIf="code.code_sectors.telefone.length == 1">
+            <ion-icon ios="ios-call" md="md-call"></ion-icon>
+          </a>
+          <div (click)="selectTipo('1')" *ngIf="code.code_sectors.telefone.length > 1">
+            <ion-icon ios="ios-call" md="md-call"></ion-icon>
+          </div>
+  
+        </div>
+  
+  
+        <div class="info-servico contacts-segments btn_segments" *ngIf="code.code_sectors.email">
+  
+          <a href="mailto:{{code.code_sectors.email[0].conteudo}}" *ngIf="code.code_sectors.email.length == 1">
+            <ion-icon slot="icon-only" name="ios-mail"></ion-icon>
+          </a>
+          <div (click)="selectTipo('2')" *ngIf="code.code_sectors.email.length > 1">
+            <ion-icon slot="icon-only" name="ios-mail"></ion-icon>
+          </div>
+  
+        </div>
+  
+        <div class="info-servico contacts-segments btn_segments" *ngIf="code.code_sectors.site">
+  
+          <a href="{{code.code_sectors.site[0].conteudo}}" *ngIf="code.code_sectors.site.length == 1">
+            <ion-icon name="globe"></ion-icon>
+          </a>
+          <div (click)="selectTipo('3')" *ngIf="code.code_sectors.site.length > 1">
+            <ion-icon name="globe"></ion-icon>
+          </div>
+  
+        </div>
+        <div class="info-servico contacts-segments btn_segments" *ngIf="code.code_sectors.facebook">
+  
+          <a href="{{code.code_sectors.facebook[0].conteudo}}" *ngIf="code.code_sectors.facebook.length == 1">
+            <ion-icon name="logo-facebook"></ion-icon>
+          </a>
+          <div (click)="selectTipo('4')" *ngIf="code.code_sectors.facebook.length > 1">
+            <ion-icon name="logo-facebook"></ion-icon>
+          </div>
+  
+        </div>
+        <div class="info-servico contacts-segments btn_segments" *ngIf="code.code_sectors.linkedin">
+  
+          <a href="{{code.code_sectors.linkedin[0].conteudo}}" *ngIf="code.code_sectors.instagram.length == 1">
+            <ion-icon ios="logo-linkedin" md="logo-linkedin"></ion-icon>
+          </a>
+          <div (click)="selectTipo('4')" *ngIf="code.code_sectors.instagram.length > 1">
+            <ion-icon ios="logo-linkedin" md="logo-linkedin"></ion-icon>
+          </div>
+  
+        </div>
+        <div class="info-servico contacts-segments btn_segments" *ngIf="code.code_sectors.instagram">
+          <a href="{{code.code_sectors.instagram[0].conteudo}}" *ngIf="code.code_sectors.instagram.length == 1">
+            <ion-icon name="logo-instagram"></ion-icon>
+          </a>
+          <div (click)="selectTipo('5')" *ngIf="code.code_sectors.instagram.length > 1">
+            <ion-icon name="logo-instagram"></ion-icon>
+          </div>
+        </div>
+     
+      </div>
+      <!-- FIM BOTOES COM WHATSAPP -->
+  
+    </ion-toolbar>
+  </ion-footer>

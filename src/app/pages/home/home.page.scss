@@ -1,0 +1,116 @@
+:host {
+  ion-content {
+    --ion-background-color: #000 !important;
+  }
+
+  ion-header {
+    //   --ion-background-color: #000000 !important;
+    --ion-background-color: rgba(5, 32, 73, 0) !important;
+    --ion-background-color: -moz-linear-gradient(-45deg, rgba(5, 32, 73, 1) 0%, rgb(0, 0, 0) 100%) !important;
+    --ion-background-color: -webkit-linear-gradient(-45deg, rgba(5, 32, 73, 1) 0%, rgb(0, 0, 0) 100%) !important;
+    --ion-background-color: linear-gradient(135deg, rgba(5, 32, 73, 1) 0%, rgb(0, 0, 0) 100%) !important;
+    color: #ffffff !important;
+  }
+  ion-footer,
+  ion-footer.md.footer-md.hydrated {
+    --ion-background-color: #000000 !important;
+    font-size: 12px;
+  }
+
+  ion-footer.md.footer-md.hydrated {
+    background-color: #000000;
+  }
+
+  ion-input {
+    border-radius: 5px;
+    background-color: #ffffff !important;
+    height: 50px;
+    text-align: center;
+    font-size: larger;
+    color: black;
+    font-weight: bold;
+    text-transform: uppercase;
+    width: 100%;
+  }
+  .icon_btn_home{
+    margin-left: 0;
+    position: absolute;
+    left: 20px;
+    display: block;
+    border-right: 2px solid #0cbee8;
+    padding-right: 10px;
+  }
+  .btn_home {
+    height: 50px;
+    font-size: large;
+  }
+  .item-interactive.ion-valid {
+    --highlight-background: transparent !important;
+  }
+
+  form.form_home {
+    /* background-color: aqua; */
+    // width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0px !important;
+  }
+  ion-button {
+    width: 90%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    /* border-radius: 5px; */
+  }
+
+  ion-footer {
+    left: 0;
+    bottom: 0;
+    position: fixed;
+    z-index: 10;
+    display: block;
+    width: 100%;
+    overflow: inherit;
+    height: 50px;
+    background: #000;
+    color: #fff;
+    .toolbar {
+      height: 55px;
+      min-height: 55px;
+
+      .toolbar-background {
+        background: #000;
+      }
+      color: #fff;
+      font: bold;
+      text-align: center;
+      span {
+        color: #fff;
+        font: bold;
+        text-align: left;
+        font-size: 10px;
+      }
+      &.adquire-code {
+        text-align: center;
+        color: #fff;
+        font-size: 10px;
+        margin-top: 5%;
+      }
+    }
+  }
+
+  .text_footer {
+    text-align: center;
+  }
+
+  .span_right {
+    float: right;
+  }
+  .qrcode_button {
+    text-align: center;
+  }
+  .message-api{
+    text-align: center;
+    padding: 7px 10px 5px 10px;
+  }
+}
