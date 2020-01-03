@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../../../app/services/authentication.service';
+import { AuthenticationService } from '../../services/authentication.service';
 import { Platform } from '@ionic/angular';
 // import { MiscService } from 'src/app/services/tools/misc.service';
 import { Router } from '@angular/router';

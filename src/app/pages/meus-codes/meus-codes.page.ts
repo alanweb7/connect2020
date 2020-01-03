@@ -11,7 +11,7 @@ import { FormControl } from '@angular/forms';
 import { GeolocationProvider } from '../../providers/geolocation/geolocation';
 import { Router } from '@angular/router';
 import { MiscService, GetMessages, GetData } from 'src/app/services/tools/misc.service';
-import { AuthenticationService } from 'src/app/services/Authentication.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({

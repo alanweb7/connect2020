@@ -1,11 +1,10 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
+import { GetData, MiscService } from 'src/app/services/tools/misc.service';
+import { ApiService } from 'src/app/services/api/api.service';
 
 // services
-import { GetData, MiscService } from "../../../app/services/tools/misc.service";
-import { ApiService } from "../../../app/services/api/api.service";
-
 
 @Component({
   selector: 'app-qrcode',

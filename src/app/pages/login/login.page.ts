@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '../../../app/services/Authentication.service';
+import { AuthenticationService } from '../../services/authentication.service';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 // migrations
@@ -19,7 +19,7 @@ import { Usuario } from './../../models/usuario.model';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateConfigService } from 'src/app/lang/translate-config.service';
 import { MiscService, GetMessages } from 'src/app/services/tools/misc.service';
-import { ConnectProvider } from '../../../app/services/code/code';
+import { ConnectProvider } from '../../services/code/code';
 import { empty } from 'rxjs';
 
 

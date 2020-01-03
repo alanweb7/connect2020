@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { CacheService } from '../../../app/services/storage/cache.service';
+import { CacheService } from '../../services/storage/cache.service';
 import { ModalController, Platform, AlertController } from '@ionic/angular';
-import { MiscService } from '../../../app/services/tools/misc.service';
+import { MiscService } from '../../services/tools/misc.service';
 import { MidiasPage } from '../midias/midias.page';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 

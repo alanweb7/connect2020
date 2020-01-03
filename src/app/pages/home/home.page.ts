@@ -7,9 +7,9 @@ import { TranslateConfigService } from '../../lang/translate-config.service';
 
 import { Platform, AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { ApiService } from '../../../app/services/api/api.service';
-import { CacheService } from '../../../app/services/storage/cache.service';
-import { GetData, MiscService } from "../../../app/services/tools/misc.service";
+import { ApiService } from '../../services/api/api.service';
+import { CacheService } from '../../services/storage/cache.service';
+import { GetData, MiscService } from "../../services/tools/misc.service";
 
 // import native
 import { OneSignal } from '@ionic-native/onesignal/ngx';

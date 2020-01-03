@@ -51,13 +51,13 @@ import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 // import services
-import { AuthGuard } from '../app/services/auth-guard.service';
-import { AuthenticationService } from '../app/services/Authentication.service';
+import { AuthGuard } from './services/auth-guard.service';
+import { AuthenticationService } from './services/authentication.service';
 //import provider
 import { ClienteProvider } from '../app/providers/cliente/cliente';
 import { SqliteHelperService } from '../app/providers/sqlite-helper/sqlite-helper.service';
 import { CodeProvider } from '../app/providers/code/code';
-import { ConnectProvider } from '../app/services/code/code';
+import { ConnectProvider } from './services/code/code';
 import { NetworkProvider } from '../app/providers/network/network';
 import { UsuarioService } from '../app/providers/movie/usuario.service';
 import { AdminToolsDb, AdminToolsRest } from '../app/providers/admin-tools/admin-tools';

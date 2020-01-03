@@ -4,7 +4,7 @@ import { NavController, NavParams, LoadingController, ToastController, Platform 
 import { ViewChild } from '@angular/core';
 import { CodeProvider } from './../../providers/code/code';
 import { UtilService } from '../../providers/util/util.service';
-import { MiscService } from '../../../app/services/tools/misc.service';
+import { MiscService } from '../../services/tools/misc.service';
 import { TranslateConfigService } from '../../../app/lang/translate-config.service';
 import { TranslateService } from '@ngx-translate/core';
 
