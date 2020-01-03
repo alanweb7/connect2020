@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 
 // services
-import { GetData, MiscService } from "../../services/tools/misc.service";
-import { ApiService } from "../../services/api/api.service";
+import { GetData, MiscService } from "../../../app/services/tools/misc.service";
+import { ApiService } from "../../../app/services/api/api.service";
 
 
 @Component({

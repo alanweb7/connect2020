@@ -3,7 +3,7 @@ import { NavParams, ModalController, Platform } from '@ionic/angular';
 import { Hotspot, HotspotNetwork } from '@ionic-native/hotspot/ngx';
 import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 import { GeolocationProvider } from '../../providers/geolocation/geolocation';
-import { MiscService, GetMessages } from '../../services/tools/misc.service';
+import { MiscService, GetMessages } from '../../../app/services/tools/misc.service';
 import { CodeProvider } from '../../providers/code/code';
 
 @Component({

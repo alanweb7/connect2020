@@ -51,8 +51,8 @@ import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 // import services
-import { AuthGuard } from './services/auth-guard.service';
-import { AuthenticationService } from './services/Authentication.service';
+import { AuthGuard } from '../app/services/auth-guard.service';
+import { AuthenticationService } from '../app/services/Authentication.service';
 //import provider
 import { ClienteProvider } from '../app/providers/cliente/cliente';
 import { SqliteHelperService } from '../app/providers/sqlite-helper/sqlite-helper.service';
