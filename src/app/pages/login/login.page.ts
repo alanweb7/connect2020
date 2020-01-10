@@ -15,7 +15,7 @@ import { UsuarioService } from '../../providers/movie/usuario.service';
 import { NetworkProvider } from '../../providers/network/network';
 import { UtilService } from '../../providers/util/util.service';
 //Import Model
-import { Usuario } from './../../models/usuario.model';
+import { Usuario } from '../../models/usuario.model';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateConfigService } from 'src/app/lang/translate-config.service';
 import { MiscService, GetMessages } from 'src/app/services/tools/misc.service';
@@ -137,7 +137,7 @@ export class LoginPage implements OnInit {
       console.log('platform ready');
       this.authenticationService.authState.subscribe(state => {
         if (state) {
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/meus-codes'], { replaceUrl: true });
         }
       });
     });
@@ -179,7 +179,7 @@ export class LoginPage implements OnInit {
 
     this.connect.setHttpPadrao(data).then((response) => {
       console.log('Dados do servidor em login Page::', response);
-      if(!response.data){
+      if (!response.data) {
         return false;
       }
       let userData = JSON.parse(response.data);

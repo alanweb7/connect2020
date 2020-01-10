@@ -1,18 +1,13 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button [routerLink]="['/meus-codes']" replaceUrl="true"></ion-button>
-    </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-button (click)="getAction('apps')" *ngIf="showMenuApps">
-        <ion-icon slot="start" name="apps" class="menu_apps"></ion-icon>
-      </ion-button>
+      <ion-back-button defaultHref="/dashboard"></ion-back-button>
     </ion-buttons>
     <ion-title>{{nome_page}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content >
+<ion-content>
   <div *ngIf="segment == 1" class="padding" style="padding: 15px;">
     <form class="col s12" [formGroup]="cadastroCode" name="cadastroCode">
       <ion-grid>
@@ -67,14 +62,16 @@
       <div *ngIf="segment == 2">
         <div class="gallery-view">
           <div class="image-container">
-            
-              <div class="thumb-item content-itens" *ngFor="let menu of menu_midias">
-                
-                  <ion-icon class="item-avatar" [ngStyle]="{'background-color': menu.bg_color ? menu.bg_color : 'red', 'color': menu.icon_color ? menu.icon_color : '#ffffff'}" name="{{menu.icon}}" (click)="getAction(menu.action)"></ion-icon>
-               
-                <h4 class="title-item">{{menu.name}}</h4>
-              </div>
-      
+
+            <div class="thumb-item content-itens" *ngFor="let menu of menu_midias">
+
+              <ion-icon class="item-avatar"
+                [ngStyle]="{'background-color': menu.bg_color ? menu.bg_color : 'red', 'color': menu.icon_color ? menu.icon_color : '#ffffff'}"
+                name="{{menu.icon}}" (click)="getAction(menu.action)"></ion-icon>
+
+              <h4 class="title-item">{{menu.name}}</h4>
+            </div>
+
             <!-- <img [src]="image.img_link" (click)="viewPhoto(image.img_link)"> -->
           </div>
         </div>
@@ -86,16 +83,16 @@
               <ion-label>
                 <ion-icon name="link"></ion-icon>
               </ion-label>
-              <ion-input name="nome" type="text" formControlName="link" placeholder="{{campo}}"
-                value="{{link}}"></ion-input>
+              <ion-input name="nome" type="text" formControlName="link" placeholder="{{campo}}" value="{{link}}">
+              </ion-input>
             </ion-item>
             <div>
               <p *ngIf="errorEmail" class="error"> {{messageEmail}}</p>
             </div>
             <ion-item>
               <ion-label>{{ativar_lik}}</ion-label>
-              <ion-toggle formControlName="islink" (ionChange)="change_segmento(meu_link)"
-                checked="{{meu_link}}"></ion-toggle>
+              <ion-toggle formControlName="islink" (ionChange)="change_segmento(meu_link)" checked="{{meu_link}}">
+              </ion-toggle>
             </ion-item>
           </ion-list>
         </form>
@@ -218,8 +215,8 @@
                     <ion-label>
                       <ion-icon name="md-wifi"></ion-icon>
                     </ion-label>
-                    <ion-input name="ssid" type="text" formControlName="ssid"
-                      placeholder="Nome da Rede" value="{{hotSpotForm.ssid}}" readonly></ion-input>
+                    <ion-input name="ssid" type="text" formControlName="ssid" placeholder="Nome da Rede"
+                      value="{{hotSpotForm.ssid}}" readonly></ion-input>
                   </ion-item>
                 </ion-list>
                 <h5>Senha usada na Rede:</h5>
@@ -228,8 +225,8 @@
                     <ion-label>
                       <ion-icon name="md-code-working"></ion-icon>
                     </ion-label>
-                    <ion-input name="password" type="text" formControlName="password"
-                      placeholder="Senha" value="{{hotSpotForm.password}}"></ion-input>
+                    <ion-input name="password" type="text" formControlName="password" placeholder="Senha"
+                      value="{{hotSpotForm.password}}"></ion-input>
                   </ion-item>
                   <div>
                     <p *ngIf="errorHotspotConnect" class="error"> {{messageHotspot}}</p>
@@ -255,19 +252,17 @@
               <ion-list>
                 <ion-item>
                   <ion-label>ATIVAR HOTSPOT</ion-label>
-                  <ion-toggle formControlName="isHotspotActive"
-                    checked="{{isHotspotActive}}"></ion-toggle>
+                  <ion-toggle formControlName="isHotspotActive" checked="{{isHotspotActive}}"></ion-toggle>
                 </ion-item>
 
                 <ion-item>
                   <ion-label>USAR SOMENTE COMO HOTSPOT</ion-label>
-                  <ion-toggle formControlName="isOnlyHotspot"
-                    checked="{{hotSpotForm.isOnlyHotspot}}"></ion-toggle>
+                  <ion-toggle formControlName="isOnlyHotspot" checked="{{hotSpotForm.isOnlyHotspot}}"></ion-toggle>
                 </ion-item>
                 <ion-item>
                   <ion-label>TELA DE CADASTRO</ion-label>
-                  <ion-toggle formControlName="isRegisterScreen"
-                    checked="{{hotSpotForm.isRegisterScreen}}"></ion-toggle>
+                  <ion-toggle formControlName="isRegisterScreen" checked="{{hotSpotForm.isRegisterScreen}}">
+                  </ion-toggle>
                 </ion-item>
               </ion-list>
             </form>

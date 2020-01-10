@@ -17,13 +17,20 @@ export class CacheService {
       data = { property: 'value', anotherProperty: 'anotherValue' };
     }
 
-    this.nativeStorage.setItem(myitem, data)
+    return await this.nativeStorage.setItem(myitem, data)
       .then(
         () => {
-          let recorded = this.getCacheApi(myitem);
-          console.log('Stored item');
-          return recorded;
-          
+          return this.getCacheApi(myitem).then((recorded) => {
+
+
+            console.log('Stored item');
+            console.log('Dados gravados: ', recorded);
+
+            return recorded;
+
+          });
+
+
         },
         error => console.error('Error storing item', error)
       );
@@ -43,5 +50,5 @@ export class CacheService {
 
   }
 
- 
+
 }

@@ -13,6 +13,7 @@ import { Hotspot, HotspotNetwork } from '@ionic-native/hotspot/ngx';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MiscService } from 'src/app/services/tools/misc.service';
 import { TranslateConfigService } from 'src/app/lang/translate-config.service';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @Component({
   selector: 'app-menu-code',
@@ -20,6 +21,9 @@ import { TranslateConfigService } from 'src/app/lang/translate-config.service';
   styleUrls: ['./menu-code.page.scss'],
 })
 export class MenuCodePage implements OnInit {
+  private codeFromLink;
+  public current_code: any = {};
+  public current_DataCode: any = [{}];
   public codeData;
   public refresh;
   public currency;
@@ -179,24 +183,13 @@ export class MenuCodePage implements OnInit {
     public platform: Platform,
     private hotspot: Hotspot,
     private tools: MiscService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private nativeStorage: NativeStorage,
   ) {
 
     this.router.initialNavigation();
 
     console.log('Dados passados via route params (constuct) menu-code.ts: ', this.route.snapshot.params);
-
-    this.menu_midias = [
-      { name: this.seg_1, icon: 'list-box', icon_color: '#ffffff', bg_color: '#7044ff', action: 'descricao' },
-      { name: this.menu_1, icon: 'camera', icon_color: '#ffffff', bg_color: '#d649c7', action: 'imagem' },
-      { name: this.menu_2, icon: 'clipboard', icon_color: '#ffffff', bg_color: '#ffdf44', action: 'doc' },
-      { name: this.menu_4, icon: 'contact', icon_color: '#ffffff', bg_color: '#ffb000', action: 'contato' },
-      { name: 'HOTSPOT', icon: 'md-wifi', icon_color: '#ffffff', bg_color: '#52f100', action: 'hotspot' },
-      { name: this.seg_3, icon: 'link', icon_color: '#ffffff', bg_color: '#24d6ea', action: 'link' },
-      { name: this.menu_3, icon: 'videocam', icon_color: '#ffffff', bg_color: 'red', action: 'video' },
-      { name: 'ÁUDIO', icon: 'mic', icon_color: '#ffffff', bg_color: '#ffd50a', action: 'audio' },
-
-    ];
 
     // migrations
     this.messages = new Messages();
@@ -240,7 +233,39 @@ export class MenuCodePage implements OnInit {
     this.platform.ready().then(() => {
       this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
       this.translate.setDefaultLang(this.selectedLanguage);
-      this.initialConfig();
+
+
+      this.nativeStorage.getItem('current_dataCode').then((dataCode) => {
+        this.current_DataCode = dataCode;
+        this.setInfoCode(dataCode);
+        console.log('Dados completos do code em edição (Storage): ', dataCode);
+      });
+
+      this.nativeStorage.getItem('current_code').then((data) => {
+        this.current_code = data;
+        let Idlocal = Number(this.current_code.code);
+        let IdServer = Number(this.current_DataCode.data[0] ? this.current_DataCode.data[0].id : 0) ;
+
+        console.log('Idlocal do enviado no cache:', this.current_code.code)
+        console.log('IdServer do info code no cache:', IdServer)
+        console.log('Id das informações do enviado no cache:', this.current_DataCode.data[0].id)
+        console.log('Dados completos do current_DataCode: ', this.current_DataCode);
+
+        if (Idlocal !== IdServer) {
+          this.nativeStorage.remove('current_dataCode').then((resRm) => {
+            console.log('Dados do info code (current_dataCode) removidos com sucesso!');
+            this.getShowCode();
+          }).catch((error)=>{
+            console.log('Erro ao remover o current_code: ', error);
+          });
+
+        }
+
+        this.initialConfig();
+      }).catch((error)=>{
+        console.log('Erro ao buscar code info total:', error);
+      });
+
     });
 
   }
@@ -300,13 +325,16 @@ export class MenuCodePage implements OnInit {
     if (redirect) {
       console.log('Redirecionando página: ', event);
       this.showMenuApps = false;
-      this.router.navigate([redirect, {teste:'legal'}]);
+      this.router.navigate([redirect, { teste: 'legal' }]);
     }
 
   }
 
   initialConfig() {
+    // dados gravados no local storage (cache)
+
     console.log('Entre in initialConfig::');
+
     this.token = String;
     this.code = String;
     this.titulo = String;
@@ -326,24 +354,21 @@ export class MenuCodePage implements OnInit {
     this.meu_link = "";
     this.t_conteudo = "";
 
-
     console.log('Dados passados via route params (ionViewDidLoad) menu-code.ts: ', this.route.snapshot.params);
 
+    this.codeFromLink = this.route.snapshot.params['code'];
     this.package_imagens = this.route.snapshot.params['package_imagens'];
     this.token = this.route.snapshot.params['token'];
-    this.id_code = this.route.snapshot.params['code'];
+    this.id_code = this.current_code.code;
     this.package_name = this.route.snapshot.params['package_name'];
     this.package_imagens = this.route.snapshot.params['package_imagens'];
     this.package_videos = this.route.snapshot.params['package_videos'];
     this.dummyData = this.route.snapshot.params['dummyData'];
-
-    // this.package_imagens = this.navParams.get('package_imagens');
-    // this.token = this.navParams.get('token');
-    // this.id_code = this.navParams.get('code');
-    // this.package_name = this.navParams.get('package_name');
-    // this.package_imagens = this.navParams.get('package_imagens');
-    // this.package_videos = this.navParams.get('package_videos');
-
+    console.log('Segmento passado pelo link: ', this.route.snapshot.params['showSegment']);
+    this.segment = this.route.snapshot.params['showSegment'];
+    if (this.route.snapshot.params['setHotSpotApi']) {
+      this.setHotSpotApi(this.route.snapshot.params['setHotSpotApi']);
+    }
 
     console.log("img", this.lang);
     console.log("Code recebido no construct:: ", this.id_code);
@@ -372,7 +397,7 @@ export class MenuCodePage implements OnInit {
   ionViewDidEnter() {
     console.log('Page menu-code,ts ionViewDidEnter');
     // this.selectedLanguage = 'pt';
- 
+
     // this.getShowCode();
 
   }
@@ -432,7 +457,17 @@ export class MenuCodePage implements OnInit {
       this.page_doc = this.translate.instant("default.page_doc");
       this.btn_excluir = this.translate.instant("default.btn_excluir");
 
+      this.menu_midias = [
+        { name: this.seg_1, icon: 'list-box', icon_color: '#ffffff', bg_color: '#7044ff', action: 'descricao' },
+        { name: this.menu_1, icon: 'camera', icon_color: '#ffffff', bg_color: '#d649c7', action: 'imagem' },
+        { name: this.menu_2, icon: 'clipboard', icon_color: '#ffffff', bg_color: '#ffdf44', action: 'doc' },
+        { name: this.menu_4, icon: 'contact', icon_color: '#ffffff', bg_color: '#ffb000', action: 'contato' },
+        { name: 'HOTSPOT', icon: 'md-wifi', icon_color: '#ffffff', bg_color: '#52f100', action: 'hotspot' },
+        { name: this.seg_3, icon: 'link', icon_color: '#ffffff', bg_color: '#24d6ea', action: 'link' },
+        { name: this.menu_3, icon: 'videocam', icon_color: '#ffffff', bg_color: 'red', action: 'video' },
+        { name: 'ÁUDIO', icon: 'mic', icon_color: '#ffffff', bg_color: '#ffd50a', action: 'audio' },
 
+      ];
     }, 250);
   }
 
@@ -444,12 +479,40 @@ export class MenuCodePage implements OnInit {
   getShowCode() {
 
     // this.util.showLoading(this.load_aguarde);
+    this.tools.presentLoading('Aguarde...');
     this.codeProvider.getShowCode(this.id_code)
       .then(
         async (result: any) => {
           this.tools.dismissAll();
           console.log("result em menu-code.ts: ", result);
           if (result.status == 200) {
+            this.nativeStorage.setItem('current_dataCode', result).then((resSet) => {
+              this.current_DataCode = result;
+              console.log('Dados completos do code em getShowCode:: (Storage): ', result);
+            });
+
+            this.setInfoCode(result);
+
+          } else {
+
+            const toast = await this.toast.create({ message: this.msg_erro, position: 'bottom', duration: 3000, closeButtonText: 'Ok!', cssClass: 'error' });
+            toast.present();
+
+          }
+
+        }, async (error: any) => {
+
+          const toast = await this.toast.create({ message: this.msg_servidor, position: 'bottom', duration: 3000, closeButtonText: 'Ok!', cssClass: 'error' });
+          toast.present();
+          this.tools.dismissAll();
+          // this.router.navigate(['/inicio']);
+        });
+
+
+  }
+
+  setInfoCode(result){
+    
             //popula todas a variaveis
             this.titulo = result.data[0]['titulo'];
             this.modelG.titulo = this.titulo;
@@ -500,24 +563,8 @@ export class MenuCodePage implements OnInit {
             } else {
               this.contato.whatsapp = null;
             }
-
-          } else {
-
-            const toast = await this.toast.create({ message: this.msg_erro, position: 'bottom', duration: 3000, closeButtonText: 'Ok!', cssClass: 'error' });
-            toast.present();
-
-          }
-
-        }, async (error: any) => {
-
-          const toast = await this.toast.create({ message: this.msg_servidor, position: 'bottom', duration: 3000, closeButtonText: 'Ok!', cssClass: 'error' });
-          toast.present();
-          this.tools.dismissAll();
-          // this.router.navigate(['/inicio']);
-        });
-
-
   }
+
   showPromptPush() {
     let data = {
       codeNumber: this.code,

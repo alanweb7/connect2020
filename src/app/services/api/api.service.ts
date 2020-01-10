@@ -64,7 +64,8 @@ export class ApiService {
      * data: {
      * url: 'http://restfull.site.com?params',
      * method: 'post|get|delete'
-     * data: Object
+     * data: Object,
+     * header: {}
      * }
      */
     let url = infoData.url;
@@ -102,6 +103,8 @@ export class ApiService {
       // let response = JSON.parse(resp.data);
       if (resp.status == 200) {
         let data = JSON.parse(resp.data);
+
+        console.log('Dados retornado na API padrão: ', data);
         return data;
       }
 

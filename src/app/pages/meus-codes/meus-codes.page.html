@@ -1,7 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/inicio" icon="home"></ion-back-button>
+      <ion-button [routerLink]="[ '/inicio' ]" routerDirection="root">
+        <ion-icon slot="icon-only" name="home"></ion-icon>
+      </ion-button>
     </ion-buttons>
     <ion-title>{{page}}</ion-title>
   </ion-toolbar>
@@ -22,6 +24,7 @@
           </ion-label>
           <ion-note slot="end">
             <ion-badge color="dark">{{code.views}}</ion-badge>
+            <ion-icon name="code" style="font-size: x-large; margin-left: 7px;"></ion-icon>
           </ion-note>
         </ion-item>
         <ion-item-options side="end" (click)="actionCode.close()">

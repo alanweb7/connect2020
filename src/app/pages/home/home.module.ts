@@ -12,6 +12,7 @@ import { HomePage } from './home.page';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { RouterModule } from '@angular/router';
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
@@ -23,6 +24,12 @@ export function LanguageLoader(http: HttpClient) {
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
+    RouterModule.forChild([
+      {
+        path: '',
+        component: HomePage
+      }
+    ]),
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,

@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { MiscService, GetMessages, GetData } from 'src/app/services/tools/misc.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { TranslateService } from '@ngx-translate/core';
+import { CacheService } from 'src/app/services/storage/cache.service';
 
 @Component({
   selector: 'app-meus-codes',
@@ -75,6 +76,7 @@ export class MeusCodesPage implements OnInit {
     private getdata: GetData,
     private platform: Platform,
     private translate: TranslateService,
+    private cacheServ: CacheService
   ) {
 
     this.searchControl = new FormControl();
@@ -199,9 +201,12 @@ export class MeusCodesPage implements OnInit {
 
   ShowMenu(code) {
     let sendData = { token: this.token, code: code, package_imagens: this.package_imagens, package_videos: this.codes_videos, package_name: this.package_name, lang: this.lang };
-    this.router.navigate(['/menu-code', {teste:'legal'}]);
-  }
+    this.cacheServ.setCacheApi('current_code', sendData).then((res) => {
+      console.log("dados do code gravado em cache: (meus-codes.ts)", res);
+      this.router.navigate(['/dashboard', { code: code }]);
+    });
 
+  }
 
   modelData() {
     let data = {

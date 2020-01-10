@@ -43,6 +43,7 @@ import { BrowserTab } from '@ionic-native/browser-tab/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 
 // import { IonicStorageModule } from '@ionic/storage';
 // import { AngularFireModule } from "angularfire2";
@@ -70,6 +71,7 @@ import { Keyboard } from '@ionic-native/keyboard/ngx';
 // import { FileUploadModule } from 'ng2-file-upload';
 
 import { Storage } from '@ionic/storage';
+import { CacheService } from './services/storage/cache.service';
 
 
 @NgModule({
@@ -89,6 +91,8 @@ import { Storage } from '@ionic/storage';
     }),
   ],
   providers: [
+    GooglePlus,
+    CacheService,
     PhotoViewer,
     AuthGuard,
     AuthenticationService,

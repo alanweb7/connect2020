@@ -1,24 +1,34 @@
 import { Injectable } from '@angular/core';
-import { LoadingController, ToastController, AlertController } from '@ionic/angular';
+import { LoadingController, ToastController, AlertController, Platform } from '@ionic/angular';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
+import { TranslateConfigService } from 'src/app/lang/translate-config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MiscService {
+  private selectedLanguage;
 
   constructor(
     public loadingController: LoadingController,
     public toastController: ToastController,
     public translate: TranslateService,
+    private translateConfigService: TranslateConfigService,
     private router: Router,
-  ) { }
+    private platform: Platform
+  ) {
 
-  testeLegal() {
+    this.platform.ready().then(() => {
+
+      this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
+      this.translate.setDefaultLang(this.selectedLanguage);
+
+    });
 
   }
+
   async presentLoading(param = null) {
     if (!param) {
       param = 'Aguarde';
@@ -39,16 +49,25 @@ export class MiscService {
     }
   }
 
-  getTrans(terms) {
-    return this.translate.instant(terms);
+  getTrans(terms){
+        return this.translate.instant(terms);
   }
 
-  redirectRouter(param:any = []){
+  redirectRouter(param: any = []) {
     console.log('Redirecionando a rota:', param);
     console.log('Info da rota:', this.router.url);
     console.log('Info da rota anterior:', param);
     this.router.navigateByUrl('/menu-code');
     // this.router.navigate(['/dashboard'], {skipLocationChange:false});
+  }
+
+
+
+  private _initialiseTranslation(): void {
+    setTimeout(() => {
+
+
+    }, 250);
   }
 
 }

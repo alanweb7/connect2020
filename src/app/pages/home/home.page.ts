@@ -15,6 +15,8 @@ import { GetData, MiscService } from "../../services/tools/misc.service";
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -27,6 +29,11 @@ export class HomePage implements OnInit {
   private url: string;
   public responseApi: any = {};
   public messageStyle;
+
+  token: any;
+
+  public timePeriodToExit = 2000;
+  public timeLatestLogin = 1578201969920;
 
   selectedLanguage: string;
 
@@ -60,10 +67,20 @@ export class HomePage implements OnInit {
     private getdata: GetData,
     private oneSignal: OneSignal,
     private alertCtrl: AlertController,
+    private googlePlus: GooglePlus,
+    private loc?: Location
 
   ) {
 
 
+    // TODO: replace current token if hash token is newer, unexpired
+    if (window.location.hash.match(/^#access_token/) && !this.token) {
+      this.parseToken();
+      loc.go('/');
+    }
+    else if (this.token) {
+      console.log('found token: ', this.token);
+    }
 
     this.platform.ready().then((res) => {
 
@@ -191,6 +208,7 @@ export class HomePage implements OnInit {
       let notificationCode = notificationAdditional.code;
       this.tools.presentLoading('Aguarde...');
       this.api.getCode(notificationCode).then((res) => {
+        console.log('Dados do Push: ', res);
         if (res.status == 200) {
           this.router.navigate(['/detalhe-code']);
         }
@@ -228,6 +246,70 @@ export class HomePage implements OnInit {
     });
     await confirm.present();
   }
+  loginGoogle() {
 
+
+    let url = "https://accounts.google.com/o/oauth2/auth?client_id=295999061864-s532o8p0ovo9khan5evobsl8aqvuaeu2.apps.googleusercontent.com&redirect_uri=https%3A%2F%2Fkscode.com.br%2Flive&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube&response_type=code&access_type=offline";
+    let data = {
+      url: url,
+      method: 'post',
+      header: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    };
+
+    this.api.getApi(data).then((res) => {
+
+      console.log('Daddos da api:', res);
+
+    });
+
+  }
+
+  loginComGoogle() {
+
+    this.googlePlus.login({
+      // 'webClientId': '576453826777-7rs50lgb7e07te41u28fuq9auom0ues7.apps.googleusercontent.com',
+    }).then((res) => {
+        console.log(res);
+        alert(JSON.stringify(res));
+    }, (err) => {
+        console.log(JSON.stringify(err));
+    });
+
+  }
+
+
+  call() {
+    // build authUrl:
+    let authBase = 'https://accounts.google.com/o/oauth2/v2/auth';
+    let authParams = {
+      response_type: 'code',
+      access_type: 'offline',
+      client_id: '295999061864-s532o8p0ovo9khan5evobsl8aqvuaeu2.apps.googleusercontent.com',
+      redirect_uri: 'https://kscode.com.br/live',
+      // redirect_uri: window.location.origin,
+      scope: 'https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube'
+    };
+    let params = [];
+    for (let k in authParams) {
+      params.push(k + '=' + authParams[k]);
+    }
+    let authUrl = authBase + '?' + params.join('&');
+    window.open(authUrl, '_self');
+  }
+
+  // TODO: move this to Token constructor?  Token(location.hash)
+  parseToken() {
+    this.token = {
+      created: new Date().getTime()
+    }
+    let parmStr = location.hash.substring(1); // strip leading hash
+    let parms = parmStr.split('&');
+
+    console.log('Params recebidos: ', parms);
+    for (let i in parms) {
+      let kv = parms[i].split('=');
+      this.token[kv[0]] = kv[1];
+    }
+  }
 
 }

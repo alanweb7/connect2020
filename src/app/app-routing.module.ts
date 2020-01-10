@@ -49,7 +49,8 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    loadChildren: './pages/dashboard/dashboard.module#DashboardPageModule'
+    loadChildren: './pages/dashboard/dashboard.module#DashboardPageModule',
+    // canActivate: [AuthGuard]
   },
   {
     path: 'Logout',
@@ -58,20 +59,22 @@ const routes: Routes = [
   {
     path: 'meus-codes',
     loadChildren: () => import('./pages/meus-codes/meus-codes.module').then( m => m.MeusCodesPageModule),
-    
+    canActivate: [AuthGuard]
   },
   {
     path: 'menu-code',
     loadChildren: () => import('./pages/menu-code/menu-code.module').then( m => m.MenuCodePageModule),
-    
+    // canActivate: [AuthGuard]
   },
   {
     path: 'image-code',
-    loadChildren: () => import('./pages/image-code/image-code.module').then( m => m.ImageCodePageModule)
+    loadChildren: () => import('./pages/image-code/image-code.module').then( m => m.ImageCodePageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'image-add',
-    loadChildren: () => import('./pages/image-add/image-add.module').then( m => m.ImageAddPageModule)
+    loadChildren: () => import('./pages/image-add/image-add.module').then( m => m.ImageAddPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'notificacao-push',
@@ -79,11 +82,13 @@ const routes: Routes = [
   },
   {
     path: 'contato-code',
-    loadChildren: () => import('./pages/contato-code/contato-code.module').then( m => m.ContatoCodePageModule)
+    loadChildren: () => import('./pages/contato-code/contato-code.module').then( m => m.ContatoCodePageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'documento-code',
-    loadChildren: () => import('./pages/documento-code/documento-code.module').then( m => m.DocumentoCodePageModule)
+    loadChildren: () => import('./pages/documento-code/documento-code.module').then( m => m.DocumentoCodePageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'video-list',
